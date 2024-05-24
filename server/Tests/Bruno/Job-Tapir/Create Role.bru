@@ -1,0 +1,19 @@
+meta {
+  name: Create Role
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:8000/roles
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "Title": "Test",
+    "CompanyId": "66510dfa453939cde07b682b",
+    "Tags": ["6650954dff4d935b1b7a6eef"]
+  }
+}

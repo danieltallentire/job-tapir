@@ -1,0 +1,20 @@
+meta {
+  name: Create Company
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:8000/companies
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "Name": "Test",
+    "Country": "UK",
+    "City": "London",
+    "Tags": ["6650954dff4d935b1b7a6eef"]
+  }
+}
