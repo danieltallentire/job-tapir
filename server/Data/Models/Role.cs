@@ -1,9 +1,10 @@
+using System.Text.Json.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using Reinforced.Typings.Attributes;
 
-public partial class Role
+[Reinforced.Typings.Attributes.TsClass(IncludeNamespace = true, Namespace = "API")] 
+public class Role
 {
 
     [BsonId]
@@ -20,6 +21,8 @@ public partial class Role
 
     public string Title { get; set; } = string.Empty;
 
+    public string Test { get; set; } = string.Empty;
+
     public string URL { get; set; } = string.Empty;
 
     public bool HasAdvertisedSalary {get; set;} = false;
@@ -30,7 +33,7 @@ public partial class Role
 
     public RemoteWorking RemoteWorking {get; set; } = new RemoteWorking();
 
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<ApplicationState>))]
     [BsonRepresentation(BsonType.String)]
     public ApplicationState State { get; set;} = ApplicationState.NotApplied;
 
@@ -44,7 +47,7 @@ public partial class Role
 
     public int CurrentStage { get; set; } = 0;
 
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<ApplicationStage>))]
     [BsonRepresentation(BsonType.String)]
     public ApplicationStage Stage { get; set; } = ApplicationStage.None;
 

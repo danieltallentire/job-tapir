@@ -10,5 +10,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "gridjs": "^6.2.0",
+    "gridjs-svelte": "^2.1.1"
+  }
 }

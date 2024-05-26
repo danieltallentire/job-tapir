@@ -1,7 +1,9 @@
 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Reinforced.Typings.Attributes;
 
+[Reinforced.Typings.Attributes.TsClass(IncludeNamespace = true, Namespace = "API")] 
 public class Tag 
 {
     [BsonId]

@@ -23,6 +23,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.4" />
     <PackageReference Include="MongoDB.Driver" Version="2.25.0" />
+    <PackageReference Include="Reinforced.Typings" Version="1.6.3" />
     <PackageReference Include="Sqlite" Version="3.13.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">

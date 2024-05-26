@@ -1,4 +1,5 @@
 using job_tapir.Data;
+using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -25,52 +26,6 @@ var app = builder.Build();
 app.UseStaticFiles();
 app.MapFallbackToFile("index.html");
 
-app.MapGet("/companies", async (IMongoCollection<Company> collection)
-  => TypedResults.Ok(await collection.Find(Builders<Company>.Filter.Empty).ToListAsync()));
-
-app.MapGet("/roles", async (IMongoCollection<Role> collection, IMongoCollection<Company> companies)
-  => TypedResults.Ok( await collection.Aggregate().Match(Builders<Role>.Filter.Where(_ => true)).Lookup(companies,
-                    r => r.CompanyId,
-                    c => c.Id,
-                    (Role r) => r.Company)
-                .Unwind(r => r.Company, new AggregateUnwindOptions<Role>() { PreserveNullAndEmptyArrays = true })
-                .ToListAsync()));
-  
-  
-  
-  
-//   AsQueryable()                    
-//                         .Join(companies.AsQueryable(),
-//                             role => role.CompanyId,
-//                             company => company.Id,
-//                             //(role, company) => new { Role = role, Company = company } )));
-//                             (role, company) => new Role(role, company) )));
-
-app.MapGet("/tags", async (IMongoCollection<Tag> collection)
-  => TypedResults.Ok(await collection.Find(Builders<Tag>.Filter.Empty).ToListAsync()));
-
-app.MapPost("/companies", async (IMongoCollection<Company> collection, Company company)
-=> {
-    company.Id = string.Empty;
-    await collection.InsertOneAsync(company);
-    return TypedResults.Ok(company);
-});
-
-app.MapPost("/roles", async (IMongoCollection<Role> collection, Role role)
-=> {
-    role.Id = string.Empty;
-    await collection.InsertOneAsync(role);
-    return TypedResults.Ok(role);
-});
-
-app.MapPost("/tags", async (IMongoCollection<Tag> collection, Tag tag)
-=> {
-    tag.Id = string.Empty;
-    await collection.InsertOneAsync(tag);
-    return TypedResults.Ok(tag);
-});
-
-
 
 var libPath = Path.Combine(app.Environment.WebRootPath, "Content");
 var contentLibrary = new ContentLibrary(libPath).Load();
@@ -83,6 +38,8 @@ app.UseCors(builder => builder
 
 //load the routes
 job_tapir.Api.Content.MapRoutes(app, contentLibrary);
+job_tapir.Api.Endpoints.MapRoutes(app);
+job_tapir.Api.Roles.MapRoutes(app);
 
 
 app.Run();
